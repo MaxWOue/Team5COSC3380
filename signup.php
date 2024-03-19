@@ -31,79 +31,169 @@
         <title>Museum of Fine Arts | Signup</title>
     </head>
     <style>
-        body {
-                font-family: tahoma;
-                background-color: #F5F2F0;
-                background-image: url('image/bg6.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-            }
-        #Bar{
-            height:100px;
-            background-color:#C5EBAA;
+
+        body{
+            background-image: url('image/museum.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;             
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Start with a darker color */
+            z-index: -1;
+            animation: fadeIn 1s ease-out forwards; /* Apply fading animation */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; } /* Start with opacity 0 */
+            to { opacity: 0.9; } /* Fade to the desired opacity */
+        }
+
+        #Bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            width: 400px;
+            background-color: #C5EBAA;
             color: black; 
             font-size: 40px;
-            padding:4px;
-            font-weight:bold;
+            margin: auto;
+            margin-top:25px;
+            padding: 4px;
+            font-weight: bold;
             text-align: center;
-            }
-        #Bar_Login{
-            background-color:#C5EBAA;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            transform: translateX(-100%); /* Start the element offscreen to the left */
+            animation: flyInFromLeft 1s forwards; /* Apply flyInFromLeft animation */
+        }
+        @keyframes flyInFromLeft {
+            from { transform: translateX(-100%); } /* Start offscreen to the left */
+            to { transform: translateX(0); } /* Fly in to the center */
+        }
+        #Bar_Create {
+            background-color:#eeede0;
             width:400px;
             margin:auto;
-            margin-top:50px;
+            margin-top:25px;
             padding:10px;
             padding-top:50px;
             text-align: center;
-            border-radius: 10px;
+            border-radius: 50px;
             font-weight:bold;
-            }
+            opacity: 0; 
+            animation: fadeIn 2s forwards; /* Apply fadeIn animation */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; } /* Start with opacity 0 */
+            to { opacity: 1; } /* Fade to full opacity */
+        }
+        #Bar_Login {
+            width:300px;
+            margin:auto;
+            margin-top:25px;
+            text-align: center;
+            font-weight:bold;
+            transition: all 2s ease;
+            transform: translateX(100%); /* Start the element offscreen to the right */
+            animation: slideInFromRight 1s forwards; /* Apply slideInFromRight animation */
+            background-color: transparent;
+        }
+        @keyframes slideInFromRight {
+            from { transform: translateX(100%); } /* Start offscreen to the right */
+            to { transform: translateX(0); } /* Slide in to the center */
+        }
         #text{
             height:40px;
             width:300px;
-            border-radius: 10px;
+            border-radius: 50px;
             border:solid 1px #888;
             padding: 2px;
             font-size: 14px;
+            padding-left: 15px;
         }
         #button{
-            width: 300px;
+            width: 200px;
             height: 40px;
-            border-radius: 10px;
+            border-radius: 50px;
             font-weight: bold;
             background-color:#A5DD9B;
             color:black;
         }
-        #create{
-            background-color:#A5DD9B;
-            color:black;
-            font-size: 20px;
-            text-align: center;
-            padding: 4px;
-            border-radius: 4px;
-            }
+        #login{
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none; /* Remove underline from the link */
+        }
+        #login-text {
+            font-weight: bold;
+            text-decoration: underline;
+            margin-left: 1px;
+        }
+        #button-group {
+            background-color: transparent;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer; /* Change cursor to pointer on hover */
+            transition: background-color 0.3s; /* Add transition for smooth hover effect */
+            margin-top: 5px; /* Adjust the spacing between the submit button and the previous input group */
+        }
+        #button-group input[type="submit"]:hover {
+            background-color: #8AC884;
+        }
+        #login-group {
+            margin-top: -15px; /* Adjust the spacing between the login button and the previous input group */
+        }
+        .input-group {
+            margin-bottom: 5px; /* Adjust the spacing between input groups */
+        }
+        .input-group input {
+            margin-bottom: 5px; /* Adjust the spacing between inputs within a group */
+        }
     </style>
-    <body style="font-family: tahoma;background-color:#F5F2F0;">
+    <body style="font-family: Papyrus;">       
         <div id="Bar"> 
             <div> 
             Museum of Fine Arts
             </div>
         </div>
-        <div id="Bar_Login"> 
-            Create a MyMuseum account<br><br>
+        <div id="Bar_Create"> 
+            Create a MoFA account<br><br>
             <form method="post" action="">
-                <input value = "<?php echo $first_name ?>" name="first_name" type="text" id="text" placeholder="First Name"><br><br>
-                <input value = "<?php echo $last_name ?>" name="last_name" type="text" id="text" placeholder="Last Name"><br><br>
-                <input value = "<?php echo $email ?>" name="email" type="text" id="text" placeholder="Email"><br><br>                
-                <input name="password" type="password" id="text" placeholder="Password"><br><br>
-                <input name="re-password" type="password" id="text" placeholder="Re-enter Password"><br><br>
-                <input type="submit" id="button" value="Create a new account"><br><br><br>
+                <div class="input-group">
+                    <input value="<?php echo $first_name ?>" name="first_name" type="text" id="text" placeholder="First Name">
+                </div>
+                <div class="input-group">
+                    <input value="<?php echo $last_name ?>" name="last_name" type="text" id="text" placeholder="Last Name">
+                </div>
+                <div class="input-group">
+                    <input value="<?php echo $email ?>" name="email" type="text" id="text" placeholder="Email">
+                </div>           
+                <div class="input-group">
+                    <input name="password" type="password" id="text" placeholder="Password">
+                </div>
+                <div class="input-group">
+                    <input name="re-password" type="password" id="text" placeholder="Re-enter Password">
+                </div>
+                <div id="button-group" class="input-group">
+                    <input type="submit" id="button" value="Create a new account">
+                </div>
             </form>
-                <input type="submit" id="create" value="Back to Login"><br><br>
-
+        </div> 
+        <div id="Bar_Login">
+            <div id="login-group" class="input-group">
+                <a href="login.php" id="login">Already have an account? <span id="login-text">Log in</span></a>
+            </div>
         </div>
-        
-
     </body>
 </html>
