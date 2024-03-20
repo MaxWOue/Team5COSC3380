@@ -7,7 +7,7 @@ body .container {
     text-align: center;
 }
 
-body .container .exhibit_container {
+body .container .exhibit_container .form-group {
     justify-content: center;
     background-color: #a29e9e;
     padding: 20px;
