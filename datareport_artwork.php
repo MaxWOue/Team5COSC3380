@@ -13,6 +13,7 @@
 		<label>Artist: </label><input name="DataReportArtist" id="DataReportArtist" type="text">
 		<label>ID: </label><input name="DataReportID" id="DataReportID" type="text"><label><br></label>
 		<input type="submit" id="button" value="Search" name="datareport_artwork_submitbutton"><br><br>
+		<form method="post"><button type="submit" name="datareport_artwork_clearselectionbutton">Clear selection</button></form>
 	</form>
   </body>
   <?php
@@ -27,14 +28,27 @@
 
 		if(isset($_POST['datareport_artwork_submitbutton'])) {
 			$conn = mysqli_connect($servername, $username, $password, $dbname);
-			$sqlDataReport = 'SELECT ArtworkName, Artist, ArtYear, AcquisitionDate, Building, RoomFloor, ArtworkID FROM artwork, room WHERE room.RoomID=artwork.RoomID AND ArtworkName LIKE "%' . $searchedname . '%" AND Artist LIKE "%' . $searchedartist . '%" AND ArtworkType LIKE "%' . $searchedtype . '%";';
+			if($searchedid == ""){
+				$sqlDataReport = 'SELECT ArtworkName, Artist, ArtYear, AcquisitionDate, Building, RoomFloor, ArtworkID FROM artwork, room WHERE room.RoomID=artwork.RoomID AND ArtworkName LIKE "%' . $searchedname . '%" AND Artist LIKE "%' . $searchedartist . '%" AND ArtworkType LIKE "%' . $searchedtype . '%" ORDER BY ArtworkName;';
+				echo $ArtworkName;
+			}
+			else{
+				$sqlDataReport = 'SELECT ArtworkName, Artist, ArtYear, AcquisitionDate, Building, RoomFloor, ArtworkID FROM artwork, room WHERE room.RoomID=artwork.RoomID AND ArtworkName LIKE "%' . $searchedname . '%" AND Artist LIKE "%' . $searchedartist . '%" AND ArtworkType LIKE "%' . $searchedtype . '%" AND ArtworkID=' . intval($searchedid) . ' ORDER BY ArtworkName;';
+				echo $ArtworkName;
+			}
 
 			$dataReportVtable = mysqli_query($conn, $sqlDataReport);
 			//EmployeeID=' . intval($DataReportEmployeeID)
 
 			while ($row = mysqli_fetch_assoc($dataReportVtable)) {
-				echo "=" . $row['Artwork'] . "=<br>Artist: " . $row['Artist'] . "<br>Year: : " . $row['ArtYear'] . "<br>Acquisition Date: " . $row['AcquisitionDate'] . "<br>Building Number: " . $row['Building'] . "<br>Room Floor: " . $row['RoomFloor'] . "<br>ArtworkID: " . $row['ArtworkID'] . "<br><br>";
+				echo "=" . $row['ArtworkName'] . "=<br>Artist: " . $row['Artist'] . "<br>Year: : " . $row['ArtYear'] . "<br>Acquisition Date: " . $row['AcquisitionDate'] . "<br>Building Number: " . $row['Building'] . "<br>Room Floor: " . $row['RoomFloor'] . "<br>ArtworkID: " . $row['ArtworkID'] . "<br><br>";
 			}
+		}
+		if(isset($_POST['datareport_artwork_clearselectionbutton'])){
+			$searchedname = "";
+			$searchedtype = "";
+			$searchedartist = "";
+			$searchedid = "";
 		}
 	?>
  </html>

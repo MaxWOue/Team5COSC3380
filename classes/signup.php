@@ -47,7 +47,10 @@ class Signup
                   </script>'; // Display pop-up message and redirect
             $this->create_user($data);
         } else {
-            return $this->error;
+            echo '<script>
+                      alert("' . str_replace("<br>", '\\n', $this->error) . '");
+                  </script>';
+            return;
         }
     }
     

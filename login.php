@@ -1,4 +1,30 @@
-<!DOCTYPE html>
+<?php
+session_start();
+
+    include("classes/connect.php");
+    include("classes/login.php");
+    
+    $email = "";
+    $password = "";
+    
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $login = new Login();
+        $result = $login->evaluate($_POST);
+        
+        if ($result != ""){
+            echo "<div style='text-align:center;font-size:12px;color:white;background-color:grey;'>";
+            echo "The following error occured:<br><br>";
+            echo $result;
+            echo "</div>";
+        } else {
+            header("Location: index.php");
+            die;
+        }
+            
+        $email = $_POST['email'];
+    }
+?>
+
 <html>
     <head>
         <title>Museum of Fine Arts | Login</title>
@@ -140,7 +166,7 @@
             Log in with MoFA account<br><br>
             <form method="post" action="">
                 <div class="input-group">
-                    <input name="email" type="text" id="text" placeholder="Email">
+                    <input value ="<?php echo $email ?>" name="email" type="text" id="text" placeholder="Email">
                 </div>           
                 <div class="input-group">
                     <input name="password" type="password" id="text" placeholder="Password">
