@@ -3,8 +3,8 @@
     session_start();
 
     include("classes/connect.php");
-    include("login.php");
-    include("user.php");
+    include("classes/login.php");
+    include("classes/user.php");
 
     //check if user is logged in
     if(isset($_SESSION['museum_userid']) && is_numeric($_SESSION['museum_userid']))
