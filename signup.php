@@ -1,5 +1,5 @@
 <?php
-    require '/path/to/vendor/autoload.php';
+    //require 'C:\wamp64\www\museum\vendor\autoload.php';
     include("classes/connect.php");
     include("classes/signup.php");
     
