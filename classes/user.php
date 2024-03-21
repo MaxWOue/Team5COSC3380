@@ -1,5 +1,5 @@
 <?php
-
+require '/path/to/vendor/autoload.php';
 class User{
     public function get_data($id){
         

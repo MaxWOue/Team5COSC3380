@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<?php
 
+<?php
+    require '/path/to/vendor/autoload.php';
     session_start();
     if (isset($_POST['logout'])) {
 

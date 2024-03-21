@@ -1,11 +1,11 @@
 <?php
-
+require '/path/to/vendor/autoload.php';
 
 class Database {
     
-    private $host = "database-1.cfkociaic7f3.us-east-2.rds.amazonaws.com";
+    private $host = "museum.cpm4eq2ycfx2.us-east-1.rds.amazonaws.com";
     private $username = "admin";
-    private $password = "josephjoestar";
+    private $password = "museumteam5";
     private $db = "MfahDB";
     
     

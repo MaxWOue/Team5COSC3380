@@ -1,4 +1,5 @@
 <?php
+    require '/path/to/vendor/autoload.php';
     include("classes/connect.php");
     include("classes/signup.php");
     

@@ -1,4 +1,5 @@
 <?php
+require '/path/to/vendor/autoload.php';
 class Signup
 {   
     private $error = "";

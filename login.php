@@ -1,4 +1,5 @@
 <?php
+require '/path/to/vendor/autoload.php';
 session_start();
 
     include("classes/connect.php");
