@@ -45,6 +45,9 @@
 
 <html lang="en"> 
 
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +58,10 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f7f7f7;
+      background-image: url('https://images.unsplash.com/photo-1571172176157-d6ee4e6e3e6e');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
 
     /* Header styles */
@@ -107,7 +113,7 @@
       max-width: 1200px;
       margin: 20px auto;
       padding: 20px;
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -217,6 +223,18 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
+    /* Employee login button */
+    .employee-login {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -227,25 +245,11 @@
     <div class="top-buttons">
       <button class="button">Exhibits</button>
       <button class="button">Events</button>
-      <button class="button">Current Events</button>
+      <button class="button">Dining</button>
       <button class="button">Tickets</button>
+      <button class="button">Data Reports</button>
     </div>
-    <?php
-        if ($result) {
-            echo '<form action="" method="post">
-                  <button type="submit" name="logout" class="login-button">Logout</button>
-                  </form>';
-        } else {
-            //echo '<button id="loginButton" class="login-button">Login</button>';
-            echo '<a href="login.php" class="login-button">Login</a>';
-        }
-    ?>
-    <?php
-        // Display welcome message only if user data exists
-        if ($result && isset($user_data)) {
-            echo '<div>Welcome, ' . $user_data['first_name'] . ' ' . $user_data['last_name'] . '</div>';
-        }
-    ?>
+    <button id="loginButton" class="login-button">Login</button>
   </header>
 
   <!-- Main Content -->
@@ -274,20 +278,32 @@
         <input type="password" id="password" name="password" required>
         <input type="submit" value="Login">
       </form>
-      <div class="signup-link">
-        <p>Don't have an account? <a href="#">Sign up!</a></p>
-      </div>
+      
+      <p>Don't have an account? <a href="#">Sign up!</a></p>
     </div>
   </div>
-  <!--
+  </div>
+  
+
+  <!-- Employee login button -->
+  <button class="employee-login">Employee Login</button>
+
   <script>
     // Get the modal
     var modal = document.getElementById("myModal");
     var loginButton = document.getElementById("loginButton");
+    var employeeLoginButton = document.querySelector(".employee-login");
 
     // When the login button is clicked, show the modal
     loginButton.onclick = function () {
       modal.style.display = "block";
+    };
+
+    // When the employee login button is clicked, handle employee login
+    employeeLoginButton.onclick = function () {
+      // Handle employee login functionality here
+      // For demonstration, let's just alert
+
     };
 
     // Get the close button
@@ -304,7 +320,7 @@
         modal.style.display = "none";
       }
     };
-  </script>-->
+  </script>
 </body>
 
 </html>
