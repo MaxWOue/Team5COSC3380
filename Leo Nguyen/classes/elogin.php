@@ -15,10 +15,10 @@ class Elogin{
         if($result){
             $row = $result[0];
             
-            if($Password == $row['password']){
+            if($password == $row['Password']){
                 
                 //create a session data
-                //$_SESSION['Museum_EmployeeID'] = $row['EmployeeID'];
+                //$_SESSION['museum_userid'] = $row['userid'];
                 
             } else {
                 $this->error .= "Invalid Password<br>";
@@ -31,7 +31,7 @@ class Elogin{
     }
     
     public function check_login($id){
-        $query = "SELECT EmployeeID FROM employee WHERE EmployeeID = '$id' limit 1";       
+        $query = "SELECT employeeid FROM employee WHERE employeeid = '$id' limit 1";       
         
         $DB = new Database();
         $result = $DB->read($query);
