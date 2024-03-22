@@ -295,6 +295,12 @@
       left: 50%;       /* Center horizontally */
       transform: translateX(-50%); /* Center the element with respect to its width */
     }
+    #profileDropdown {
+    display: none;
+    }
+    #profileDropdown.active {
+        display: block;
+    }
   </style>
 </head>
 
@@ -302,16 +308,6 @@
   <!-- Header -->
   <header>
     <h1>Welcome to Our Museum!</h1>
-  <div class="profile-picture" id="profilePicture">
-    <img src="image/no-profile-picture-icon.webp" alt="Profile Picture">
-    <div class="profile-dropdown" id="profileDropdown">
-      <div class="profile-dropdown-content">
-        <a href="#">View Profile</a>
-        <a href="#">Settings</a>
-        <a href="#">Logout</a>
-      </div>
-    </div>
-  </div>
   
   <div class="top-buttons">
     <button class="button">Exhibits</button>
@@ -322,11 +318,21 @@
   </div>
         <?php
         if ($result) {
-            echo '<form action="" method="post">
-                  <button type="submit" name="logout" class="login-button">Logout</button>
-                  </form>';
+                echo '  <div class="profile-picture" id="profilePicture">
+                        <img src="image/avatar.jpg" alt="Profile Picture">
+                        <div class="profile-dropdown" id="profileDropdown">
+                          <div class="profile-dropdown-content">
+                            <a href="profile.php">View Profile</a>
+                            <a href="#">Settings</a>
+                            <a href="logout.php">Logout</a>
+                          </div>
+                        </div>
+                      </div>';
+            //echo '<form action="" method="post">
+            //      <button type="submit" name="logout" class="login-button">Logout</button>
+            //      </form>';
         } else {
-            //echo '<button id="loginButton" class="login-button">Login</button>';
+            echo '<button id="loginButton" class="login-button">Login</button>';
             echo '<a href="login.php" class="login-button">Login</a>';
         }
         ?>
@@ -350,43 +356,37 @@
     <li>Educational programs and events for visitors of all ages, including guided tours and workshops.</li>
   </ul>
   </div>
-
   <!-- Employee login button -->
   <a href="elogin.php" class="employee-login">Employee Login</a>
 
-  <script>
-  // Get the modal
-  var modal = document.getElementById("myModal");
-  var loginButton = document.getElementById("loginButton");
-  var employeeLoginButton = document.querySelector(".employee-login");
-  var profilePicture = document.getElementById("profilePicture");
-  var profileDropdown = document.getElementById("profileDropdown");
+      <script>
+      // Get the modal
+    document.addEventListener('DOMContentLoaded', function () {
+        var loginButton = document.getElementById("loginButton");
+        var employeeLoginButton = document.querySelector(".employee-login");
+        var profilePicture = document.getElementById("profilePicture");
+        var profileDropdown = document.getElementById("profileDropdown");
 
-  // When the login button is clicked, show the modal
-  loginButton.onclick = function () {
-    modal.style.display = "block";
-  };
+        // When the user clicks on the profile picture, toggle the dropdown
+        profilePicture.onclick = function () {
+        profileDropdown.classList.toggle("active");
+        };
 
-  // When the user clicks on the profile picture, toggle the dropdown
-  profilePicture.onclick = function () {
-    profileDropdown.classList.toggle("active");
-  };
+        // Get the close button
+        var closeButton = document.getElementsByClassName("close")[0];
 
-  // Get the close button
-  var closeButton = document.getElementsByClassName("close")[0];
+        // When the user clicks on the close button, close the modal
+        closeButton.onclick = function () {
+        modal.style.display = "none";
+        };
 
-  // When the user clicks on the close button, close the modal
-  closeButton.onclick = function () {
-    modal.style.display = "none";
-  };
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
-  </script>
-  </body>
-
-  </html>
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+        }
+    });
+      </script>
+</body>
+</html>
