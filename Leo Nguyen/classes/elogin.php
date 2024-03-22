@@ -14,35 +14,31 @@ class Elogin{
         
         if($result){
             $row = $result[0];
-            
             if($password == $row['Password']){
                 
                 //create a session data
-                //$_SESSION['museum_userid'] = $row['userid'];
+                $_SESSION['museum_employeeid'] = $row['EmployeeID'];
                 
             } else {
-                $this->error .= "Invalid Password<br>";
+                $this->error .= "Invalid Email/Password<br>";
             }
         } else {
-            $this->error .= "Invalid Email<br>";
+            $this->error .= "Invalid Email/Password<br>";
         }
             
         return $this->error;
     }
     
-    public function check_login($id){
-        $query = "SELECT employeeid FROM employee WHERE employeeid = '$id' limit 1";       
+    public function check_elogin($eid){
+        $equery = "SELECT employeeid FROM employee WHERE employeeid = '$eid' limit 1";       
         
         $DB = new Database();
-        $result = $DB->read($query);
+        $result = $DB->read($equery);
         
-        if($result){
-            
+        if($result){       
             return true;
-        }
-        
+        }   
         return false;
-        
     }
 }
 

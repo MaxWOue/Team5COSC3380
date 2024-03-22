@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 
     include("classes/connect.php");
     include("classes/elogin.php");
@@ -8,8 +8,8 @@
     $password = "";
     
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $Elogin = new Elogin();
-        $result = $Elogin->evaluate($_POST);
+        $elogin = new Elogin();
+        $result = $elogin->evaluate($_POST);
         
         if ($result != ""){
             echo "<div style='text-align:center;font-size:12px;color:white;background-color:grey;'>";

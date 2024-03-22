@@ -1,11 +1,7 @@
 <?php
     session_start();
     if (isset($_POST['logout'])) {
-
-        unset($_SESSION['museum_userid']);
-        
-
-        header("Location: index.php");
+        header("Location: logout.php");
         exit;
     }
     $result = false;
@@ -40,7 +36,7 @@
     }
 ?>
 
-<html lang="en"> 
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -52,8 +48,27 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f7f7f7;
+      background-image: url('image/collage.jpg');
+      /* Remove the existing background image */
     }
+
+    body::after {
+      content: "";
+      background-image: url('https://www.iconsdb.com/icons/preview/black/museum-xxl.png');
+      /* Add a new background image */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.5;
+      /* Adjust opacity as needed */
+    }
+
+    /* Remaining styles remain unchanged */
 
     /* Header styles */
     header {
@@ -61,6 +76,7 @@
       color: #fff;
       padding: 20px;
       text-align: center;
+      position: relative; /* Added position relative */
     }
 
     header h1 {
@@ -99,12 +115,60 @@
       font-size: 16px;
     }
 
+    /* Profile picture and dropdown */
+    .profile-picture {
+      position: absolute;
+      top: 20px;
+      right: 100px; /* Adjusted right position */
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .profile-picture img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: 60px; /* Adjusted top position */
+      right: 0;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      display: none;
+    }
+
+    .profile-dropdown.active {
+      display: block;
+    }
+
+    .profile-dropdown-content {
+      padding: 12px 16px;
+      text-decoration: none;
+      color: black;
+      display: block;
+    }
+
+    .profile-dropdown-content a {
+      display: block;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: black;
+    }
+
+    .profile-dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
     /* Content styles */
     .container {
       max-width: 1200px;
       margin: 20px auto;
       padding: 20px;
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -127,6 +191,92 @@
       background-size: 16px;
       background-position: left center;
       line-height: 1.6;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      border-radius: 5px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .signup-link {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .signup-link a {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    .signup-link a:hover {
+      text-decoration: none;
+    }
+
+    /* Style for form inputs */
+    .modal-content form label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .modal-content form input[type="text"],
+    .modal-content form input[type="password"] {
+      width: calc(100% - 22px);
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .modal-content form input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Continue as Guest button */
+    .continue-as-guest {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     /* Employee login button */
@@ -152,13 +302,25 @@
   <!-- Header -->
   <header>
     <h1>Welcome to Our Museum!</h1>
-    <div class="top-buttons">
-      <button class="button">Exhibits</button>
-      <button class="button">Events</button>
-      <button class="button">Current Events</button>
-      <button class="button">Tickets</button>
+  <div class="profile-picture" id="profilePicture">
+    <img src="image/no-profile-picture-icon.webp" alt="Profile Picture">
+    <div class="profile-dropdown" id="profileDropdown">
+      <div class="profile-dropdown-content">
+        <a href="#">View Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
     </div>
-    <?php
+  </div>
+  
+  <div class="top-buttons">
+    <button class="button">Exhibits</button>
+    <button class="button">Events</button>
+    <button class="button">Dining</button>
+    <button class="button">Tickets</button>
+    <button class="button">Data Reports</button>
+  </div>
+        <?php
         if ($result) {
             echo '<form action="" method="post">
                   <button type="submit" name="logout" class="login-button">Logout</button>
@@ -167,28 +329,64 @@
             //echo '<button id="loginButton" class="login-button">Login</button>';
             echo '<a href="login.php" class="login-button">Login</a>';
         }
-    ?>
-    <?php
-        // Display welcome message only if user data exists
-        if ($result && isset($user_data)) {
-            echo '<div>Welcome, ' . $user_data['first_name'] . ' ' . $user_data['last_name'] . '</div>';
-        }
-    ?>
+        ?>
+        <?php
+            // Display welcome message only if user data exists
+            if ($result && isset($user_data)) {
+                echo '<div>Welcome, ' . $user_data['first_name'] . ' ' . $user_data['last_name'] . '</div>';
+            }
+        ?>
   </header>
 
   <!-- Main Content -->
   <div class="container">
-    <p>Step into a world of wonder and discovery as you explore our museum's vast collection of artifacts and
-      exhibitions.</p>
-    <p>Our museum features:</p>
-    <ul>
-      <li>An extensive collection of ancient artifacts spanning various civilizations.</li>
-      <li>Fascinating exhibits showcasing the natural world, from artwork to sculptures.</li>
-      <li>Interactive displays and immersive experiences that bring art to life.</li>
-      <li>Educational programs and events for visitors of all ages, including guided tours and workshops.</li>
-    </ul>
+  <p>Step into a world of wonder and discovery as you explore our museum's vast collection of artifacts and
+    exhibitions.</p>
+  <p>Our museum features:</p>
+  <ul>
+    <li>An extensive collection of ancient artifacts spanning various civilizations.</li>
+    <li>Fascinating exhibits showcasing the natural world, from artwork to sculptures.</li>
+    <li>Interactive displays and immersive experiences that bring art to life.</li>
+    <li>Educational programs and events for visitors of all ages, including guided tours and workshops.</li>
+  </ul>
   </div>
-  <a href="elogin.php" class="employee-login">Employee Login</a>
-</body>
 
-</html>
+  <!-- Employee login button -->
+  <a href="elogin.php" class="employee-login">Employee Login</a>
+
+  <script>
+  // Get the modal
+  var modal = document.getElementById("myModal");
+  var loginButton = document.getElementById("loginButton");
+  var employeeLoginButton = document.querySelector(".employee-login");
+  var profilePicture = document.getElementById("profilePicture");
+  var profileDropdown = document.getElementById("profileDropdown");
+
+  // When the login button is clicked, show the modal
+  loginButton.onclick = function () {
+    modal.style.display = "block";
+  };
+
+  // When the user clicks on the profile picture, toggle the dropdown
+  profilePicture.onclick = function () {
+    profileDropdown.classList.toggle("active");
+  };
+
+  // Get the close button
+  var closeButton = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on the close button, close the modal
+  closeButton.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+  </script>
+  </body>
+
+  </html>
