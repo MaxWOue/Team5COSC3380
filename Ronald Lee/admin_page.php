@@ -1,3 +1,41 @@
+<?php
+    session_start();
+    if (isset($_POST['logout'])) {
+        header("Location: logout.php");
+        exit;
+    }
+    $result = false;
+
+    include("classes/connect.php");
+    include("classes/login.php");
+    include("classes/user.php");
+
+    //check if user is logged in
+    if(isset($_SESSION['museum_userid']) && is_numeric($_SESSION['museum_userid'])){
+
+        $id = $_SESSION['museum_userid'];
+        $login = new Login();
+
+        $result = $login->check_login($id);
+
+        if($result){
+            //get userdata
+            $user = new User();
+            $user_data = $user->get_data($id);
+
+            if(!$user_data){
+                header("Location: login.php");
+                die;
+            }
+
+        } else {
+            header("Location: login.php");
+            die;
+        }
+
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
