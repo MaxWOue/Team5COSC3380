@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<?php
+    session_start();
+    if (isset($_POST['logout'])) {
+        unset($_SESSION['museum_employeeid']);
+        header("Location: elogin.php");
+        exit;
+    }
+    $result = false;
+    
+    include("classes/connect.php");
+    include("classes/elogin.php");
+    include("classes/employee.php");
+    
+    //check if employee is logged in
+    if(isset($_SESSION['museum_employeeid']) && is_numeric($_SESSION['museum_employeeid'])){
+        
+        $eid = $_SESSION['museum_employeeid'];
+        $elogin = new Elogin();
+        
+        $result = $elogin->check_elogin($eid);
+        if($result){
+            //get employee data
+            $employee = new Employee();
+            $employee_data = $employee->get_data($eid);
+            
+            if(!$employee_data){
+                header("Location: elogin.php");
+                die;
+            }
+        } else {
+            header("Location: elogin.php");
+            die;
+        }
+        
+    } else {
+            header("Location: elogin.php");
+            die;
+    }
+?>
+
 <html lang="en">
 
 <head>
