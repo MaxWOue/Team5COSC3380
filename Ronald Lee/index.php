@@ -49,7 +49,7 @@
       font-family: 'Verdana', sans-serif;
       margin: 0;
       padding: 0;
-      background-image: url('collage.jpg');
+      background-image: url('image/collage.jpg');
       /* Remove the existing background image */
     }
 
