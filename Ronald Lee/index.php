@@ -46,7 +46,7 @@
   <style>
     /* General styles */
     body {
-      font-family: 'Verdana', sans-serif;
+      font-family: 'Trebuchet MS', sans-serif;
       margin: 0;
       padding: 0;
       background-image: url('image/collage.jpg');
